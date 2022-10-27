@@ -1,0 +1,60 @@
+class LogIn(QDialog):
+    def __init__(self):
+        super(LogIn, self).__init__()
+        loadUi("LogIn.ui", self)
+        self.Back.clicked.connect(self.gotoBack)
+        self.Password.setEchoMode(QtWidgets.QLineEdit.Password)
+        self.ForgotPassword.clicked.connect(self.gotoForgotPassword)
+        self.Enter.clicked.connect(self.gotoEnter)
+
+    def gotoBack(self):
+        a = SecondLayer()
+        widget.addWidget(a)
+        widget.setCurrentIndex(widget.currentIndex() + 1)
+
+    def gotoForgotPassword(self):
+        a = self.Username.text()
+        A = open("Database.txt", "r")
+        previous_entry = False
+        for line in A:
+            line = line[1:len(line) - 2]
+            user_info = line.split("][")
+            if user_info[0] == a:
+                self.errorLabelUsername.setText("")
+                self.LabelPasswordHint.setText(f"Password Hint: {user_info[2]}")
+                previous_entry = True
+                break
+        if previous_entry == False:
+            self.successLabel.setText("")
+            self.errorLabelUsername.setText("* Username not found in database !")
+        A.close()
+
+    def gotoEnter(self):
+        a = self.Username.text()
+        b = self.Password.text()
+        A = open("Database.txt", "r")
+        previous_entry = False
+        for line in A:
+            line = line[1:len(line) - 2]
+            user_info = line.split("][")
+            #print(user_info)
+            if user_info[0] == a:
+                previous_entry = True
+                self.errorLabelUsername.setText("")
+                if user_info[1] == b:
+                    self.LabelPasswordHint.setText("")
+                    self.errorLabelPassword.setText("")
+                    mixer.music.play()
+                    time.sleep(0.8)
+                    self.successLabel.setText("Log in successful !")
+                    a = SelectTask()
+                    widget.addWidget(a)
+                    widget.setCurrentIndex(widget.currentIndex() + 1)
+                    break
+                else:
+                    self.successLabel.setText("")
+                    self.errorLabelPassword.setText("* Wrong  password !")
+        if previous_entry == False:
+            self.successLabel.setText("")
+            self.errorLabelUsername.setText("* Username not found in database !")
+        A.close()
