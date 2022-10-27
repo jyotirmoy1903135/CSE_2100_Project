@@ -1,0 +1,18 @@
+class WelcomeScreen(QDialog):
+    def __init__(self):
+        super(WelcomeScreen, self).__init__()
+        loadUi("welcomescreen1.ui", self)
+        self.START.clicked.connect(self.gotoSecondLayer)
+        self.EXIT.clicked.connect(self.gotoExit)
+
+    def gotoSecondLayer(self):
+        mixer.music.play()
+        time.sleep(0.8)
+        a = SecondLayer()
+        widget.addWidget(a)
+        widget.setCurrentIndex(widget.currentIndex()+1)
+
+    def gotoExit(self):
+        mixer.music.play()
+        time.sleep(0.8)
+        exit()
