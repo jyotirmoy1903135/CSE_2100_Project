@@ -1,0 +1,29 @@
+class SecondLayer(QDialog):
+    def __init__(self):
+        super(SecondLayer, self).__init__()
+        loadUi("authentication1.ui", self)
+        self.LogIn.clicked.connect(self.gotoLogIn)
+        self.CreateAccount.clicked.connect(self.gotoCreateAccount)
+        self.Back.clicked.connect(self.gotoBack)
+
+
+    def gotoLogIn(self):
+        mixer.music.play()
+        time.sleep(0.8)
+        a = LogIn()
+        widget.addWidget(a)
+        widget.setCurrentIndex(widget.currentIndex() + 1)
+
+    def gotoCreateAccount(self):
+        mixer.music.play()
+        time.sleep(0.8)
+        a = CreateAccount()
+        widget.addWidget(a)
+        widget.setCurrentIndex(widget.currentIndex() + 1)
+
+    def gotoBack(self):
+        mixer.music.play()
+        #time.sleep(0.8)
+        a = WelcomeScreen()
+        widget.addWidget(a)
+        widget.setCurrentIndex(widget.currentIndex() + 1)
